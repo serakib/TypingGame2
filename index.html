@@ -3,354 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypeBlitz Arcade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>TypeBlitz Ultimate Arcade</title>
     <style>
-        :root {
-            --bg: #0b0f19;
-            --panel: #131b2e;
-            --accent: #00ffcc;
-            --danger: #ff3366;
-            --warning: #ffcc00;
-            --text: #f0f4f8;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Share Tech Mono', monospace; }
-
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: #080b11;
+            color: #00ffcc;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: space-between;
-            padding: 1rem;
-            overflow: hidden;
-            user-select: none;
         }
 
         header {
-            width: 100%;
-            max-width: 900px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--panel);
-            border: 2px solid rgba(0, 255, 204, 0.2);
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 15px 30px;
+            background: rgba(10, 15, 25, 0.9);
+            border-bottom: 2px solid #00ffcc33;
             box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
-        }
-
-        .logo {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-
-        .stats {
-            display: flex;
-            gap: 2rem;
-            font-size: 1.2rem;
-        }
-
-        .stats span { color: var(--warning); font-weight: bold; }
-
-        /* Game Arena */
-        .arena {
-            width: 100%;
-            max-width: 900px;
-            flex-grow: 1;
-            position: relative;
-            background: rgba(15, 23, 42, 0.7);
-            margin: 1rem 0;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-        }
-
-        /* Target Words Falling */
-        .target {
-            position: absolute;
-            background: #1e293b;
-            border: 2px solid #334155;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 1.2rem;
-            white-space: nowrap;
-            transition: top 0.03s linear;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        .target.active-target {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
-            transform: scale(1.05);
-        }
-
-        .target .typed { color: var(--accent); text-shadow: 0 0 8px rgba(0,255,204,0.6); }
-        .target .remaining { color: var(--text); }
-
-        .danger-zone {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            height: 4px;
-            background: var(--danger);
-            box-shadow: 0 0 15px var(--danger);
-        }
-
-        /* Bottom Typing Input */
-        .input-box {
-            width: 100%;
-            max-width: 900px;
-        }
-
-        #user-input {
-            width: 100%;
-            background: var(--panel);
-            border: 2px solid var(--accent);
-            padding: 1rem;
-            font-size: 1.5rem;
-            color: var(--accent);
-            border-radius: 8px;
-            outline: none;
-            text-align: center;
-            letter-spacing: 2px;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.2);
-        }
-
-        /* Overlay */
-        #overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 15, 25, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             z-index: 10;
         }
 
-        .modal {
-            background: var(--panel);
-            border: 2px solid var(--accent);
-            padding: 3rem;
-            border-radius: 12px;
-            text-align: center;
-            width: 420px;
-            box-shadow: 0 0 40px rgba(0, 255, 204, 0.3);
-        }
-
-        .modal h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 3rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-        }
-
-        .modal p { color: #94a3b8; margin-bottom: 2rem; font-size: 1.1rem; }
-
-        .btn {
-            background: var(--accent);
-            color: var(--bg);
-            border: none;
-            padding: 0.8rem 2rem;
-            font-size: 1.3rem;
-            font-family: 'Teko', sans-serif;
-            letter-spacing: 1px;
+        .logo {
+            font-size: 1.5rem;
             font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 25px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat span {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        #game-container {
+            position: relative;
+            flex-grow: 1;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0e1626 0%, #05070a 100%);
+        }
+
+        /* Falling Targets */
+        .target {
+            position: absolute;
+            padding: 6px 12px;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid #00ffcc;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            white-space: nowrap;
             transition: transform 0.1s;
         }
 
-        .btn:hover { transform: scale(1.05); }
+        .target.special-bomb {
+            background: rgba(255, 50, 50, 0.2);
+            border-color: #ff3333;
+            box-shadow: 0 0 15px #ff3333;
+        }
+
+        .target.special-freeze {
+            background: rgba(50, 150, 255, 0.2);
+            border-color: #3399ff;
+            box-shadow: 0 0 15px #3399ff;
+        }
+
+        .target .matched {
+            color: #00ffcc;
+            text-shadow: 0 0 8px #00ffcc;
+        }
+        
+        .target.special-bomb .matched {
+            color: #ff3333;
+            text-shadow: 0 0 8px #ff3333;
+        }
+
+        /* Footer Input Area */
+        footer {
+            padding: 20px 30px;
+            background: rgba(10, 15, 25, 0.95);
+            border-top: 2px solid #00ffcc33;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        #input-box {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            background: #05080f;
+            border: 2px solid #00ffcc66;
+            border-radius: 6px;
+            color: #00ffcc;
+            font-size: 1.5rem;
+            text-align: center;
+            letter-spacing: 3px;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.2);
+            transition: all 0.3s;
+        }
+
+        #input-box:focus {
+            border-color: #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4), inset 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .instructions {
+            font-size: 0.85rem;
+            color: #66a399;
+            letter-spacing: 1px;
+        }
+
+        /* Screens & Overlays */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 10, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            gap: 20px;
+        }
+
+        .overlay h1 {
+            font-size: 3rem;
+            color: #00ffcc;
+            text-shadow: 0 0 20px #00ffcc;
+            letter-spacing: 4px;
+        }
+
+        .overlay p {
+            font-size: 1.1rem;
+            color: #aaffff;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .arcade-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+        .arcade-btn:hover {
+            background: #00ffcc;
+            color: #05070a;
+            box-shadow: 0 0 25px #00ffcc;
+        }
+
+        .mode-select {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .mode-chip {
+            padding: 8px 16px;
+            background: #0d1b2a;
+            border: 1px solid #00ffcc44;
+            color: #88ccbb;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .mode-chip.active {
+            background: #00ffcc22;
+            border-color: #00ffcc;
+            color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">TYPEBLITZ // ARCADE</div>
-        <div class="stats">
-            <div>SCORE: <span id="score">0</span></div>
-            <div>SHIELDS: <span id="lives">❤️❤️❤️</span></div>
+        <div class="logo">TYPEBLITZ // ULTIMATE</div>
+        <div class="stats-container">
+            <div class="stat">Score: <span id="score-display">0</span></div>
+            <div class="stat">Shields: <span id="shields-display">3</span></div>
+            <div class="stat">WPM: <span id="wpm-display">0</span></div>
+            <div class="stat">Accuracy: <span id="acc-display">100%</span></div>
         </div>
     </header>
 
-    <div class="arena" id="arena">
-        <div class="danger-zone"></div>
-    </div>
+    <div id="game-container">
+        <!-- Start / Mode Selection Overlay -->
+        <div id="start-screen" class="overlay">
+            <h1>TYPEBLITZ</h1>
+            <p>Select Game Mode & Destroy Incoming Data Streams</p>
+            <div class="mode-select">
+                <div class="mode-chip active" data-mode="arcade">Arcade</div>
+                <div class="mode-chip" data-mode="timeattack">Time Attack (60s)</div>
+                <div class="mode-chip" data-mode="survival">Survival (1 Life)</div>
+            </div>
+            <button class="arcade-btn" id="start-btn">INITIALIZE GAME</button>
+        </div>
 
-    <div class="input-box">
-        <input type="text" id="user-input" placeholder="TYPE TO DESTROY TARGETS..." autofocus autocomplete="off" spellcheck="false">
-    </div>
-
-    <div id="overlay">
-        <div class="modal">
-            <h1 id="modal-title">TYPEBLITZ</h1>
-            <p id="modal-desc">Type falling words before they breach the base line. Lock onto words by typing their first letter.</p>
-            <button class="btn" id="start-btn">PLAY GAME</button>
+        <!-- Game Over Overlay -->
+        <div id="gameover-screen" class="overlay hidden">
+            <h1>SYSTEM FAILURE</h1>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <p>Personal Best: <span id="high-score">0</span></p>
+            <button class="arcade-btn" id="restart-btn">RE-INITIALIZE</button>
         </div>
     </div>
 
+    <footer>
+        <input type="text" id="input-box" placeholder="TYPE TO DESTROY TARGETS..." autocomplete="off" disabled>
+        <div class="instructions">Type target words fully and hit space/enter to clear. Watch out for Red (Bombs) & Blue (Freeze) modifiers!</div>
+    </footer>
+
     <script>
-        const words = [
-            "laser", "plasma", "shield", "orbit", "cyber", "matrix", "vector", 
-            "signal", "packet", "router", "daemon", "proxy", "quantum", "binary", 
-            "syntax", "kernel", "buffer", "script", "runtime", "firewall", "node"
+        const wordList = [
+            "cyber", "matrix", "orbit", "quantum", "neon", "blitz", "script", "terminal", 
+            "protocol", "firewall", "kernel", "syntax", "runtime", "binary", "packet", 
+            "router", "cloud", "buffer", "crypto", "server", "nodes", "gateway", "payload",
+            "glitch", "vector", "stream", "logic", "array", "string", "token", "hash"
         ];
 
         let score = 0;
-        let lives = 3;
-        let gameRunning = false;
-        let activeTargets = [];
-        let lockedTarget = null;
-        let spawnTimer = null;
-        let gameLoopTimer = null;
+        let shields = 3;
+        let highScore = localStorage.getItem('typeblitz_highscore') || 0;
+        let gameActive = false;
+        let currentMode = 'arcade';
+        let targets = [];
+        let spawnInterval = null;
+        let gameTimer = null;
+        let timeLeft = 60;
+        
+        let totalTypedChars = 0;
+        let correctTypedChars = 0;
+        let startTime = 0;
 
-        const arena = document.getElementById('arena');
-        const inputField = document.getElementById('user-input');
-        const scoreEl = document.getElementById('score');
-        const livesEl = document.getElementById('lives');
-        const overlay = document.getElementById('overlay');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-desc');
+        const gameContainer = document.getElementById('game-container');
+        const inputBox = document.getElementById('input-box');
+        const scoreDisplay = document.getElementById('score-display');
+        const shieldsDisplay = document.getElementById('shields-display');
+        const wpmDisplay = document.getElementById('wpm-display');
+        const accDisplay = document.getElementById('acc-display');
+        const startScreen = document.getElementById('start-screen');
+        const gameOverScreen = document.getElementById('gameover-screen');
         const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const finalScoreEl = document.getElementById('final-score');
+        const highScoreEl = document.getElementById('high-score');
+        const modeChips = document.querySelectorAll('.mode-chip');
+
+        // Audio Context setup for procedural retro sound effects
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        function playSound(type) {
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            let now = audioCtx.currentTime;
+            if (type === 'hit') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'bomb') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(40, now + 0.4);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else if (type === 'miss') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(120, now);
+                osc.frequency.exponentialRampToValueAtTime(60, now + 0.2);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            }
+        }
+
+        // Mode selection
+        modeChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                modeChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentMode = chip.dataset.mode;
+            });
+        });
+
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
 
         function startGame() {
-            arena.innerHTML = '<div class="danger-zone"></div>';
-            activeTargets = [];
-            lockedTarget = null;
+            initAudio();
+            startScreen.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            inputBox.disabled = false;
+            inputBox.value = '';
+            inputBox.focus();
+
+            // Reset state
             score = 0;
-            lives = 3;
-            gameRunning = true;
+            shields = currentMode === 'survival' ? 1 : 3;
+            targets.forEach(t => t.element.remove());
+            targets = [];
+            gameActive = true;
+            totalTypedChars = 0;
+            correctTypedChars = 0;
+            startTime = Date.now();
+            timeLeft = 60;
 
-            overlay.style.display = 'none';
-            inputField.value = '';
-            inputField.focus();
+            updateStats();
 
-            updateHUD();
+            // Spawner configuration based on mode
+            let rate = currentMode === 'timeattack' ? 1200 : 1800;
+            clearInterval(spawnInterval);
+            spawnInterval = setInterval(spawnTarget, rate);
 
-            spawnTimer = setInterval(spawnTarget, 1800);
-            gameLoopTimer = setInterval(updateGame, 30);
+            if (currentMode === 'timeattack') {
+                clearInterval(gameTimer);
+                gameTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) endGame();
+                }, 1000);
+            }
         }
 
         function spawnTarget() {
-            if (!gameRunning) return;
+            if (!gameActive) return;
 
-            const text = words[Math.floor(Math.random() * words.length)];
-            if (activeTargets.some(t => t.text === text)) return;
+            let word = wordList[Math.floor(Math.random() * wordList.length)];
+            // Avoid duplicate words active on screen
+            if (targets.some(t => t.word === word)) return;
 
-            const el = document.createElement('div');
-            el.className = 'target';
-            el.innerHTML = `<span class="remaining">${text}</span>`;
+            let type = 'normal';
+            let rand = Math.random();
+            if (rand < 0.12) type = 'bomb';
+            else if (rand < 0.22) type = 'freeze';
 
-            const maxLeft = arena.clientWidth - 130;
-            const left = Math.max(10, Math.floor(Math.random() * maxLeft));
-            el.style.left = left + 'px';
-            el.style.top = '0px';
+            let el = document.createElement('div');
+            el.className = `target ${type === 'bomb' ? 'special-bomb' : type === 'freeze' ? 'special-freeze' : ''}`;
+            el.innerText = word;
+            
+            // Random horizontal position within boundaries
+            let maxX = gameContainer.clientWidth - 120;
+            let x = Math.max(20, Math.random() * maxX);
+            let y = -40;
+            
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            gameContainer.appendChild(el);
 
-            arena.appendChild(el);
+            let speed = (0.7 + Math.random() * 0.6) * (1 + score / 500);
 
-            activeTargets.push({
-                text: text,
-                typedLen: 0,
-                element: el,
-                top: 0,
-                speed: 1.0 + (score / 400)
-            });
+            targets.push({ word, element: el, x, y, speed, type });
         }
 
+        // Main Animation & Game Loop
         function updateGame() {
-            if (!gameRunning) return;
+            if (gameActive) {
+                for (let i = targets.length - 1; i >= 0; i--) {
+                    let t = targets[i];
+                    t.y += t.speed;
+                    t.element.style.top = `${t.y}px`;
 
-            for (let i = activeTargets.length - 1; i >= 0; i--) {
-                let t = activeTargets[i];
-                t.top += t.speed;
-                t.element.style.top = t.top + 'px';
-
-                // Check collision at bottom line
-                if (t.top >= arena.clientHeight - 45) {
-                    removeTarget(i);
-                    lives--;
-                    updateHUD();
-                    if (lives <= 0) gameOver();
-                    break;
-                }
-            }
-        }
-
-        function removeTarget(index) {
-            let t = activeTargets[index];
-            if (t.element.parentNode) t.element.remove();
-            if (lockedTarget === t) lockedTarget = null;
-            activeTargets.splice(index, 1);
-        }
-
-        function updateHUD() {
-            scoreEl.innerText = score;
-            livesEl.innerText = '❤️'.repeat(Math.max(0, lives));
-        }
-
-        inputField.addEventListener('input', () => {
-            if (!gameRunning) return;
-            const val = inputField.value.trim().toLowerCase();
-
-            if (!lockedTarget) {
-                // Lock onto the first word matching the typed letter
-                lockedTarget = activeTargets.find(t => t.text.toLowerCase().startsWith(val));
-                if (lockedTarget) {
-                    lockedTarget.element.classList.add('active-target');
-                }
-            }
-
-            if (lockedTarget) {
-                if (lockedTarget.text.toLowerCase().startsWith(val)) {
-                    lockedTarget.typedLen = val.length;
-                    
-                    const typedPart = lockedTarget.text.substring(0, val.length);
-                    const remPart = lockedTarget.text.substring(val.length);
-                    lockedTarget.element.innerHTML = `<span class="typed">${typedPart}</span><span class="remaining">${remPart}</span>`;
-
-                    // Successfully completed target
-                    if (val === lockedTarget.text.toLowerCase()) {
-                        score += 10;
-                        inputField.value = '';
-                        const idx = activeTargets.indexOf(lockedTarget);
-                        if (idx !== -1) removeTarget(idx);
-                        lockedTarget = null;
-                        updateHUD();
+                    // Check if target reached bottom boundary
+                    if (t.y > gameContainer.clientHeight - 50) {
+                        t.element.remove();
+                        targets.splice(i, 1);
+                        handleMiss();
                     }
-                } else {
-                    // Wrong key pressed while locked — reset lock
-                    if (lockedTarget) lockedTarget.element.classList.remove('active-target');
-                    lockedTarget = null;
-                    inputField.value = '';
+                }
+                updateMetrics();
+            }
+            requestAnimationFrame(updateGame);
+        }
+        requestAnimationFrame(updateGame);
+
+        function handleMiss() {
+            shields--;
+            playSound('miss');
+            updateStats();
+            if (shields <= 0) {
+                endGame();
+            }
+        }
+
+        function updateStats() {
+            scoreDisplay.innerText = score;
+            shieldsDisplay.innerText = shields;
+        }
+
+        function updateMetrics() {
+            let elapsedMinutes = (Date.now() - startTime) / 60000;
+            if (elapsedMinutes > 0) {
+                let wpm = Math.round((correctTypedChars / 5) / elapsedMinutes);
+                wpmDisplay.innerText = currentMode === 'timeattack' ? `${timeLeft}s` : wpm;
+                
+                let accuracy = totalTypedChars > 0 ? Math.round((correctTypedChars / totalTypedChars) * 100) : 100;
+                accDisplay.innerText = `${accuracy}%`;
+            }
+        }
+
+        // Input Handling & Typing Logic
+        inputBox.addEventListener('input', (e) => {
+            if (!gameActive) return;
+            let typedVal = inputBox.value.trim().toLowerCase();
+            totalTypedChars++;
+
+            // Find matching active target starting with typed letters
+            let matchedTarget = targets.find(t => t.word.startsWith(typedVal));
+
+            if (matchedTarget) {
+                correctTypedChars++;
+                // Highlight matched portion
+                let matchedPart = matchedTarget.word.substring(0, typedVal.length);
+                let remainingPart = matchedTarget.word.substring(typedVal.length);
+                matchedTarget.element.innerHTML = `<span class="matched">${matchedPart}</span>${remainingPart}`;
+
+                // Check if word is fully typed
+                if (typedVal === matchedTarget.word) {
+                    playSound('hit');
+                    score += matchedTarget.word.length * 10;
+                    
+                    // Trigger Special Abilities
+                    if (matchedTarget.type === 'bomb') {
+                        playSound('bomb');
+                        // Clear all active targets on screen for bonus points
+                        score += targets.length * 20;
+                        targets.forEach(t => t.element.remove());
+                        targets = [];
+                    } else if (matchedTarget.type === 'freeze') {
+                        // Temporarily slow down all targets
+                        targets.forEach(t => {
+                            let oldSpeed = t.speed;
+                            t.speed = 0.2;
+                            setTimeout(() => { t.speed = oldSpeed; }, 3000);
+                        });
+                    } else {
+                        matchedTarget.element.remove();
+                        targets = targets.filter(t => t !== matchedTarget);
+                    }
+
+                    inputBox.value = '';
+                    updateStats();
                 }
             } else {
-                inputField.value = '';
+                // Mistake reset or shake effect could go here
             }
         });
 
-        function gameOver() {
-            gameRunning = false;
-            clearInterval(spawnTimer);
-            clearInterval(gameLoopTimer);
+        function endGame() {
+            gameActive = false;
+            clearInterval(spawnInterval);
+            clearInterval(gameTimer);
+            inputBox.disabled = true;
 
-            const best = parseInt(localStorage.getItem('typeblitz_best')) || 0;
-            if (score > best) localStorage.setItem('typeblitz_best', score);
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('typeblitz_highscore', highScore);
+            }
 
-            modalTitle.innerText = "GAME OVER";
-            modalDesc.innerText = `Final Score: ${score} \n Personal Best: ${Math.max(score, best)}`;
-            startBtn.innerText = "PLAY AGAIN";
-            overlay.style.display = 'flex';
+            finalScoreEl.innerText = score;
+            highScoreEl.innerText = highScore;
+            gameOverScreen.classList.remove('hidden');
         }
-
-        startBtn.addEventListener('click', startGame);
     </script>
 </body>
 </html>
